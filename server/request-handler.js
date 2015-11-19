@@ -7,6 +7,34 @@ var Job = require('./db/models/job');
 var Client = require('./db/models/client');
 var request = require('request');
 var User = require('./db/models/user');
+var Task = require('./db/models/task');
+
+exports.fetchTasks = function (req, res) {
+  Task.find({user: req.session.user._id})
+     .populate('job')
+     .exec(function (err, tasks) {
+       if(err) {
+        res.send(500, err);
+       } else {
+        res.send(tasks);
+       }
+     });
+};
+
+exports.addTask = function (req, res) {
+  var newTask = new Task({
+    name: req.body.name
+  });
+  newTask.save(function (err, newTask) {
+    if (err) {
+      res.send(500, err);
+      console.log('error adding task');
+    } else {
+      console.log('added new task: ', newTask);
+      res.send(200, newTask);
+    }
+  });
+};
 
 /*
 fetchClients is called when /clients path receives get request
@@ -45,7 +73,7 @@ Responds with result of query
 */
 exports.fetchJobs = function (req, res) {
   Job.find({user: req.session.user._id})
-     .populate('client', 'name')
+     .populate('client')
      .exec(function (err, jobs) {
        if(err) {
         res.send(500, err);

@@ -38,6 +38,9 @@ app.get('/add', util.checkUser, renderIndex);
 app.get('/jobs', util.checkUser, handle.fetchJobs);
 app.post('/jobs', handle.addJob);
 
+app.get('/tasks', util.checkUser, handle.fetchTasks);
+app.post('/tasks', handle.addTask);
+
 app.get('/login', loginUserForm);
 app.post('/login', handle.loginUser);
 
