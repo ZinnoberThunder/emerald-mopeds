@@ -22,9 +22,14 @@ app.use(partials());
 app.use(express.static(__dirname + '/../client'));
 app.use(session({
   secret: 'nyan cat',
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }));
+
+app.use(function (req, res, next) {
+  console.log(req.method + " request to " + req.url);
+  next();
+});
 
 //Request handlers for all routes in app
 app.get('/', util.checkUser, renderIndex);
