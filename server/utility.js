@@ -47,6 +47,7 @@ exports.createJobDoc = function(req, res) {
     if(err) return res.send(500, err);
 
     var newJob = new Job({
+      user: req.session.user._id,
       client: client[0]._id,
       rate: req.body.rate,
       start: req.body.start,
