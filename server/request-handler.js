@@ -23,10 +23,15 @@ exports.fetchTasks = function (req, res) {
      });
 };
 
+exports.decodeToken = function(token) {
+  var user = jwt.decode(token, 'nyan cat');
+  return user._id
+};
+
 exports.addTask = function (req, res) {
   console.log(req);
   var newTask = new Task({
-    user: req.session.user._id,
+    user: exports.decodeToken(req.headers['x-access-token']),
     job: req.body.job,
     name: req.body.name,
     start: Date.now()
@@ -53,7 +58,7 @@ fetchClients is called when /clients path receives get request
 Finds all clients in the database and responds with result of query
 */
 exports.fetchClients = function (req, res) {
-  Client.find({user: req.session.user._id})
+  Client.find({user: exports.decodeToken(req.headers['x-access-token'])})
     .exec(function (err, clients) {
       res.send(200, clients);
   });
@@ -64,7 +69,7 @@ Builds new Client document with request properties and saves it to the db
 */
 exports.addClient = function (req, res) {
   var newClient = new Client({
-    user: req.session.user._id,
+    user: exports.decodeToken(req.headers['x-access-token']),
     name: req.body.name,
     address: req.body.address,
     phone: req.body.phone
@@ -86,7 +91,7 @@ Finds all jobs in the database, replaces client_id with an object that include c
 Responds with result of query
 */
 exports.fetchJobs = function (req, res) {
-  Job.find({user: req.session.user._id})
+  Job.find({user: exports.decodeToken(req.headers['x-access-token'])})
      .populate('client', 'name')
      .exec(function (err, jobs) {
        if(err) {
