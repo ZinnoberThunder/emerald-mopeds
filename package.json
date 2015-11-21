@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "serve": "node-inspector & nodemon --debug ./server/server.js"
   },
   "repository": {
     "type": "git",
@@ -40,10 +41,12 @@
     "grunt-nodemon": "0.2.1",
     "grunt-shell": "0.6.4",
     "jquery": "2.1.4",
+    "jwt-simple": "^0.3.1",
     "mongoose": "4.2.5",
     "mongoose-auto-increment": "5.0.1",
     "morgan": "1.6.1",
     "node-mongo-seeds": "2.2.7",
+    "q": "^1.4.1",
     "request": "2.65.0",
     "supertest": "1.1.0",
     "underscore": "1.8.3"
