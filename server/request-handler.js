@@ -151,6 +151,7 @@ exports.loginUser = function (req, res) {
             // util.createSession(req, res, user);
             var token = jwt.encode(user, 'nyan cat');
             res.json({token: token});
+            console.log(res);
           }
         })
       }

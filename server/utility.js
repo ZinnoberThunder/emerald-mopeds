@@ -1,24 +1,46 @@
 var Job = require('./db/models/job');
 var Client = require('./db/models/client');
+var jwt = require('jwt-simple');
+var Q = require('q');
 
-exports.isLoggedIn = function(req, res) {
-  return req.session ? !!req.session.user : false;
-};
+// exports.isLoggedIn = function(req, res) {
+//   return req.headers['x-access-token'] ? !!
+//   return req.session ? !!req.session.user : false;
+// };
 
 exports.checkUser = function(req, res, next) {
-  if (!exports.isLoggedIn(req)) {
-    res.render('splash');
+  var token = req.headers['x-access-token']
+  if (!token) {
+    next(new Error("no token"))
   } else {
-    next();
+    var user = jwt.decode(token, 'nyan cat');
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: user.username})
+      .then(function(foundUser){
+        if (foundUser) {
+          res.send(200)
+        } else {
+          res.send(401)
+        }
+      })
+      .fail(function(err){
+        next(err);
+      })
   }
+
+  // if (!exports.isLoggedIn(req)) {
+  //   res.render('splash');
+  // } else {
+  //   next();
+  // }
 };
 
-exports.createSession = function(req, res, newUser) {
-  return req.session.regenerate(function() {
-      req.session.user = newUser;
-      res.redirect('/');
-    });
-};
+// exports.createSession = function(req, res, newUser) {
+//   return req.session.regenerate(function() {
+//       req.session.user = newUser;
+//       res.redirect('/');
+//     });
+// };
 
 /*
 Post requests from the front-end can either be a requests to create a new job or to update a new job.
