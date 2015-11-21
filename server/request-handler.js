@@ -60,7 +60,7 @@ Finds all clients in the database and responds with result of query
 exports.fetchClients = function (req, res) {
   Client.find({user: exports.decodeToken(req.headers['x-access-token'])})
     .exec(function (err, clients) {
-      res.send(200, clients);
+      res.json(clients);
   });
 };
 
@@ -80,7 +80,7 @@ exports.addClient = function (req, res) {
       console.log('error adding/saving client');
     } else {
       console.log('added new client: ', newClient);
-      res.send(200, newClient);
+      res.json(newClient);
     }
   });
 };
@@ -97,7 +97,7 @@ exports.fetchJobs = function (req, res) {
        if(err) {
         res.send(500, err);
        } else {
-        res.send(jobs);
+        res.json(jobs);
        }
      });
 };
