@@ -1,60 +1,69 @@
-var app = angular.module('lancealot', ['lancealot.jobs', 'ngRoute']);
+angular.module('lancealot', [
+  'lancealot.jobs',
+  'lancealot.signup',
+  'lancealot.login',
+  'ngRoute'])
 
-app.config(function ($routeProvider, $httpProvider) {
+  .config(function ($routeProvider) {
 
-  $routeProvider
-    .when('/', {
-      templateUrl: './index.html'
-    })
-    .when('/jobspage', {
-      templateUrl: './jobs.html',
-      controller: 'JobsController'
-    });
+    $routeProvider
+      .when('/', {
+        templateUrl: './jobs.html',
+        controller: 'JobsController'
+      })
+      .when('/login', {
+        templateUrl: './login.html',
+        controller: 'LoginController'
+      })
+      .when('/signup', {
+        templateUrl: './signup.html',
+        controller: 'SignupController'
+      });
 
-});
+  })
 
-app.factory('Jobs', function ($http) {
+  .factory('Jobs', function ($http) {
 
-  var fetchJobs = function () {
-    $http({
-      method: 'GET', 
-      url: '/jobs'
-    }).then(function (res) {
-      return res.data;
-    })
-  };
+    var fetchJobs = function () {
+      $http({
+        method: 'GET', 
+        url: '/jobs'
+      }).then(function (res) {
+        return res.data;
+      })
+    };
 
-  return {
-    fetchJobs: fetchJobs
-  };
-});
+    return {
+      fetchJobs: fetchJobs
+    };
+  });
 
-app.factory('Tasks', function ($http){
-  var fetchTasks = function (id) {
-    $http({
-      method: 'GET',
-      url: '/jobs/' + id
-    }).then(function (res){
-      return res.data;
-    });
-  };
+// app.factory('Tasks', function ($http){
+//   var fetchTasks = function (id) {
+//     $http({
+//       method: 'GET',
+//       url: '/jobs/' + id
+//     }).then(function (res){
+//       return res.data;
+//     });
+//   };
 
-  return {
-    fetchTasks: fetchTasks
-  };
-});
+//   return {
+//     fetchTasks: fetchTasks
+//   };
+// });
 
-app.factory('Clients', function ($http){
-  var fetchClients = function (){
-    $http({
-      method: 'GET',
-      url: '/clients'
-    }).then(function (res){
-      return res.data;
-    });
-  };
+// app.factory('Clients', function ($http){
+//   var fetchClients = function (){
+//     $http({
+//       method: 'GET',
+//       url: '/clients'
+//     }).then(function (res){
+//       return res.data;
+//     });
+//   };
 
-  return {
-    fetchClients: fetchClients
-  };
-});
+//   return {
+//     fetchClients: fetchClients
+//   };
+// });
