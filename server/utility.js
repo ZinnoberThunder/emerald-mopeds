@@ -3,6 +3,7 @@ var Client = require('./db/models/client');
 var jwt = require('jwt-simple');
 var Q = require('q');
 var User = require('./db/models/user');
+var request = require('./request-handler');
 
 // exports.isLoggedIn = function(req, res) {
 //   return req.headers['x-access-token'] ? !!
@@ -19,7 +20,7 @@ exports.checkUser = function(req, res, next) {
     findUser({username: user.username})
       .then(function(foundUser){
         if (foundUser) {
-          res.send(200)
+          next()
         } else {
           res.send(401)
         }
@@ -70,7 +71,7 @@ exports.createJobDoc = function(req, res) {
     if(err) return res.send(500, err);
 
     var newJob = new Job({
-      user: req.session.user._id,
+      user: request.decodeToken(req.headers['x-access-token']),
       client: client[0]._id,
       rate: req.body.rate,
       start: req.body.start,
