@@ -1,16 +1,19 @@
 angular.module('lancealot.login', [])
 
-  .controller('LoginController', function ($scope, Login) {
+  .controller('LoginController', function ($scope, Login, Auth) {
     
     $scope.loginUser = function () {
-      Login.loginUser($scope.email, $scope.password);
+      Login.loginUser($scope.email, $scope.password)
+        .then(function(token) {
+          Auth.storeToken(token);
+        });
     }
   })
 
   .factory('Login', function ($http, $location) {
 
     var loginUser = function (email, password) {
-      $http({
+      return $http({
         method: 'POST', 
         url: '/login',
         data: {
@@ -18,10 +21,9 @@ angular.module('lancealot.login', [])
           password: password
         }
       }).then(function (res) {
-        // do something with token (local storage of token)
         $location.path('/');
-        console.log(res.token);
-        return res.data; // what to do with this?
+        console.log(res.data.token);
+        return res.data.token;
       })
     };
 
