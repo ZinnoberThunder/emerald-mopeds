@@ -26,20 +26,29 @@ app.use(session({
   saveUninitialized: true
 }));
 
+app.use(function (req, res, next) {
+  console.log(req.body);
+  next();
+});
+
 //Request handlers for all routes in app
 app.get('/', util.checkUser, renderIndex);
 
-app.get('/clients', handle.fetchClients);
+app.get('/clients', util.checkUser, handle.fetchClients);
 app.post('/clients', handle.addClient);
 
-app.get('/addclient', renderIndex);
-app.get('/add', renderIndex);
+app.get('/addclient', util.checkUser, renderIndex);
+app.get('/add', util.checkUser, renderIndex);
 
-app.get('/jobs', handle.fetchJobs);
+app.get('/jobs', util.checkUser, handle.fetchJobs);
+app.get('/jobs/:id', util.checkUser, handle.fetchTasks);
 app.post('/jobs', handle.addJob);
 
 app.get('/login', loginUserForm);
 app.post('/login', handle.loginUser);
+
+app.get('/tasks', util.checkUser, handle.fetchTasks);
+app.post('/tasks', handle.addTask);
 
 app.get('/signup', signupUserForm);
 app.post('/signup', handle.signupUser);
