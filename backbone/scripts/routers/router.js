@@ -47,7 +47,7 @@ Lancealot.Router = Backbone.Router.extend({
   },
 
   showTasks: function(id) {
-    var tasks = new Lancealot.Tasks([{job_id: id}], {job_id: id});
+    var tasks = new Lancealot.Tasks([], {job_id: id});
     var tasksView = new Lancealot.TasksListView({ collection: tasks });
     this.swapView(tasksView);
 
