@@ -5,13 +5,30 @@
   <title>Lance-a-lot</title>
   <script src="lib/angular/angular.min.js"></script>
   <script src="lib/angular-route/angular-route.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
+  <header>
+      <span><h1> Lance-a-lot </h1> </span>
+      <span class='tagline'> A freelancer's companion</span>
+    </header>
+  <div class='navigation'>
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li><a href='/' class='index'>View Jobs</a></li>
+        <li><a href='/add' class='add'>Add Job</a></li>
+        <li><a href='/clients' class='clients'>View Clients</a></li>
+        <li><a href='/addclient' class='add'>Add Client</a></li>
+        <li><a href='/logout' class='add'>Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div id='container'></div>
   <!-- <div ng-view></div> -->
   <div ng-repeat="job in jobs" ng-controller="JobsController">
     {{job}}
   </div>
-  <script src="jobsController.js"></script>
-  <script src="app.js"></script>
+  <script src="./jobsController.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
