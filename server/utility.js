@@ -20,7 +20,7 @@ exports.checkUser = function(req, res, next) {
     findUser({username: user.username})
       .then(function(foundUser){
         if (foundUser) {
-          next()
+          next();
         } else {
           res.send(401)
         }
