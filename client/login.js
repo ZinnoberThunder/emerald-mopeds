@@ -20,6 +20,7 @@ angular.module('lancealot.login', [])
       }).then(function (res) {
         // do something with token (local storage of token)
         $location.path('/');
+        console.log(res.token);
         return res.data; // what to do with this?
       })
     };
