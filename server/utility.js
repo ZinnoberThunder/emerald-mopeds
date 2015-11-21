@@ -2,6 +2,7 @@ var Job = require('./db/models/job');
 var Client = require('./db/models/client');
 var jwt = require('jwt-simple');
 var Q = require('q');
+var User = require('./db/models/user');
 
 // exports.isLoggedIn = function(req, res) {
 //   return req.headers['x-access-token'] ? !!
