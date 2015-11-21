@@ -32,7 +32,7 @@ angular.module('lancealot.clients', [])
         method: 'GET', 
         url: '/clients'
       }).then(function (res) {
-        return res.data.clients;
+        return res.data;
       });
     };
 
@@ -42,7 +42,8 @@ angular.module('lancealot.clients', [])
         url: '/clients',
         data: client
       }).then(function (res) {
-        return res.data.client;
+        console.log(res.data);
+        return res.data;
       });
     };
 
