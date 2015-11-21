@@ -86,9 +86,9 @@ function splash (req, res, next) {
   next();
 };
 
-function loginUserForm (req, res) {
-  res.render('login');
-};
+// function loginUserForm (req, res) {
+//   res.render('login');
+// };
 
 var port = process.env.PORT || 3000;
 
