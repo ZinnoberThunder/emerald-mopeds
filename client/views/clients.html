@@ -1,0 +1,33 @@
+<div class='navigation' ng-controller="NavController">
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a href='/#/' class='index'>Jobs</a></li>
+      <li><a href='/#/clients' class='clients'>Clients</a></li>
+      <li><a ng-click="logoutUser()" href='/#/login' class='add'>Logout</a></li>
+    </ul>
+  </nav>
+</div>
+
+<form ng-submit="addClient(client)" class="form-group" id="addClient">
+  <label>Name:</label>
+    <input ng-model="client.name" class="form-control" id="name" type="text"/><br/>
+  <label>Address:</label>
+    <input ng-model="client.address" class="form-control" id="address" type="text"/><br/>
+  <label>Phone:</label>
+    <input ng-model="client.phone" class="form-control" id="phone" type="text"/><br/>
+  <button class="submit btn btn-default">Add Client</button>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <th class="clientCells">Name</th>
+    <th class="clientCells">Address</th>
+    <th class="clientCells">Phone</th>
+  </thead>
+  
+  <tr ng-repeat="client in clients">
+    <td class="clientCells">{{client.name}}</td>
+    <td class="clientCells">{{client.address}}</td>
+    <td class="clientCells">{{client.phone}}</td>
+  </tr>
+</table>

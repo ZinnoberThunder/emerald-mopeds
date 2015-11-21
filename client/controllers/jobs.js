@@ -1,6 +1,6 @@
 angular.module('lancealot.jobs', [])
 
-  .controller('JobsController', function ($scope, Jobs) {
+  .controller('JobsController', function ($scope, Jobs, Clients) {
     $scope.jobs = [{
       client: {
         name: 'fb'
@@ -20,21 +20,41 @@ angular.module('lancealot.jobs', [])
       formattedEnd: 4,
       _id: 1
     }];
-    //$scope.jobs = Jobs.fetchJobs();
+
+    Clients.fetchClients() 
+      .then(function (clients) {
+        $scope.clients = clients;
+      });
+
+    Jobs.fetchJobs()
+      .then(function (jobs) {
+        $scope.jobs = jobs;
+      });
   })
 
   .factory('Jobs', function ($http) {
 
     var fetchJobs = function () {
-      $http({
+      return $http({
         method: 'GET', 
         url: '/jobs'
       }).then(function (res) {
         return res.data;
-      })
+      });
+    };
+
+    var addJob = function (job) {
+      return $http({
+        method: 'POST',
+        url: '/jobs',
+        data: job
+      }).then(function (res) {
+        return res.data.job;
+      });
     };
 
     return {
-      fetchJobs: fetchJobs
+      fetchJobs: fetchJobs,
+      addJob: addJob
     };
   })

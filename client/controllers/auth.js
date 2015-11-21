@@ -14,8 +14,13 @@ angular.module('lancealot.auth', [])
       return !!$window.localStorage.getItem('token');
     };
 
+    var logoutUser = function() {
+      $window.localStorage.removeItem('token');
+    };
+
     return {
       isAuth: isAuth,
+      logoutUser: logoutUser,
       storeToken: storeToken,
       retrieveToken: retrieveToken
     };

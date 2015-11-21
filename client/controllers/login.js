@@ -22,7 +22,6 @@ angular.module('lancealot.login', [])
         }
       }).then(function (res) {
         $location.path('/');
-        console.log(res.data.token);
         return res.data.token;
       })
     };
