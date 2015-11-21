@@ -8,6 +8,8 @@ var Client = require('./db/models/client');
 var request = require('request');
 var User = require('./db/models/user');
 var Task = require('./db/models/task');
+var jwt = require('jwt-simple');
+var Q = require('q');
 
 exports.fetchTasks = function (req, res) {
   Task.find({job: req.params.id})
@@ -146,7 +148,9 @@ exports.loginUser = function (req, res) {
             console.log('Redirecting back to login page...');
             res.redirect('/login');
           } else {
-            util.createSession(req, res, user);
+            // util.createSession(req, res, user);
+            var token = jwt.encode(user, 'nyan cat');
+            res.json({token: token});
           }
         })
       }
@@ -209,8 +213,10 @@ exports.signupUser = function (req, res) {
           if (err) {
             return console.error('Saving user to db failed');
           } else {
-            console.log(user);
-            util.createSession(req, res, user);
+            // console.log(user);
+            // util.createSession(req, res, user);
+            var token = jwt.encode(user, 'nyan cat');
+            res.json({token: token});
           }
         });        
       } else {
@@ -218,4 +224,29 @@ exports.signupUser = function (req, res) {
         res.redirect('/login');
       }
     });
+};
+
+exports.checkAuth = function (req, res, next) {
+  // checking to see if the user is authenticated
+  // grab the token in the header is any
+  // then decode the token, which we end up being the user object
+  // check to see if that user exists in the database
+  var token = req.headers['x-access-token'];
+  if (!token) {
+    next(new Error('No token'));
+  } else {
+    var user = jwt.decode(token, 'nyan cat');
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: user.username})
+      .then(function (foundUser) {
+        if (foundUser) {
+          res.send(200);
+        } else {
+          res.send(401);
+        }
+      })
+      .fail(function (error) {
+        next(error);
+      });
+  }
 };

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var autoIncrement = require('mongoose-auto-increment');
+
 var SALT_WORK_FACTOR = 10;
 
 var userSchema = mongoose.Schema({
