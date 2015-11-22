@@ -8,7 +8,7 @@
   </nav>
 </div>
 
-<form ng-submit="addTask(task)" class="form-group" id="addJob">
+<form ng-hide="openTask" ng-submit="addTask(task)" class="form-group" id="addJob">
     <label>Task description:</label>
       <input ng-model="task.name" lass="form-control" id="name" type="text"/><br/>
     <button class="submit btn btn-default">Start</button>
@@ -24,7 +24,9 @@
   <tr ng-repeat="task in tasks">
     <td>{{task.name}}</td>
     <td>{{task.start}}</td>
-    <td>{{task.end}}</td>
+    <td ng-show="task.end">{{task.end}}</td>
+    <td ng-hide="task.end"><button ng-click="endTask(task)">Stop</button></td>
+
   </tr>
 
 </table>

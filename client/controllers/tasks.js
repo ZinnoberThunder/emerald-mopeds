@@ -3,25 +3,33 @@ angular.module('lancealot.tasks', [])
   .controller('TasksController', function ($scope, $routeParams, Tasks) {
     $scope.tasks = [];
 
+    $scope.openTask = false;
+
+    $scope.endTask = function(task) {
+      console.log(task);
+      Tasks.endTask(task).then($scope.fetchTasks);
+      $scope.openTask = false;
+    };
+
+    $scope.fetchTasks = function() {
+      Tasks.fetchTasks($routeParams.jobId)
+        .then(function (tasks) {
+          $scope.tasks = tasks;
+        });
+    }
+
     $scope.addTask = function (task) {
       
       Tasks.addTask(task, $routeParams.jobId)
         .then(function () {
-          Tasks.fetchTasks($routeParams.jobId)
-            .then(function (tasks) {
-              $scope.tasks = tasks;
-            });
+          $scope.fetchTasks();
+          $scope.openTask = true;
         });
-
       $scope.task = {};
-
     };
-
-    Tasks.fetchTasks($routeParams.jobId)
-      .then(function (tasks) {
-        $scope.tasks = tasks;
-      });
+    $scope.fetchTasks()
   })
+
 
   .factory('Tasks', function ($http) {
 
@@ -33,6 +41,16 @@ angular.module('lancealot.tasks', [])
         return res.data;
       });
     };
+
+
+    var endTask = function(task) {
+      return $http({
+        method: 'POST',
+        url: '/tasks/' + task._id
+      }).then(function(res){
+        return res.data;
+      })
+    }
 
     var addTask = function (task, jobId) {
 
@@ -49,6 +67,7 @@ angular.module('lancealot.tasks', [])
 
     return {
       fetchTasks: fetchTasks,
-      addTask: addTask
+      addTask: addTask,
+      endTask: endTask
     };
   })

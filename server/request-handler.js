@@ -48,8 +48,9 @@ exports.addTask = function (req, res) {
 };
 
 exports.stopTimer = function (req, res) {
-  Task.findOneAndUpdate({_id: req.body._id}, {end: Date.now()}, function (err, task) {
+  Task.findOneAndUpdate({_id: req.params.id}, {end: Date.now()}, function (err, task) {
     if (err) return res.send(500, err);
+    res.sendStatus(200);
   });
 };
 

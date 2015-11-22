@@ -49,6 +49,7 @@ app.post('/login', handle.loginUser);
 
 app.get('/tasks', util.checkUser, handle.fetchTasks);
 app.post('/tasks', handle.addTask);
+app.post('/tasks/:id', handle.stopTimer);
 
 // app.get('/signup', signupUserForm);
 app.post('/signup', handle.signupUser);
