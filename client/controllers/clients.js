@@ -16,6 +16,7 @@ angular.module('lancealot.clients', [])
         .then(function (client) {
           $scope.clients.push(client);
         });
+      $scope.client = {};
     };
 
     Clients.fetchClients()
@@ -42,7 +43,6 @@ angular.module('lancealot.clients', [])
         url: '/clients',
         data: client
       }).then(function (res) {
-        console.log(res.data);
         return res.data;
       });
     };

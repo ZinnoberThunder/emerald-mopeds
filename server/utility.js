@@ -82,7 +82,8 @@ exports.createJobDoc = function(req, res) {
 
     newJob.save(function (err, job) {
       if (err) return res.send(500, err);
-      res.redirect('/jobs');
+      // job.client = {name: req.body.client};
+      res.json(job);
     });
 
   });

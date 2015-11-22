@@ -21,6 +21,19 @@ angular.module('lancealot.jobs', [])
       _id: 1
     }];
 
+    $scope.addJob = function (job) {
+      Jobs.addJob(job)
+        .then(function () {
+          Jobs.fetchJobs()
+            .then(function (jobs) {
+              $scope.jobs = jobs;
+            });
+        });
+
+      $scope.job = {};
+
+    };
+
     Clients.fetchClients() 
       .then(function (clients) {
         $scope.clients = clients;
@@ -49,7 +62,7 @@ angular.module('lancealot.jobs', [])
         url: '/jobs',
         data: job
       }).then(function (res) {
-        return res.data.job;
+        return;
       });
     };
 
