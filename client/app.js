@@ -43,6 +43,9 @@ angular.module('lancealot', [
       .when('/signup', {
         templateUrl: './views/signup.html',
         controller: 'SignupController'
+      })
+      .otherwise({
+        templateUrl: './views/splash.html'
       });
 
     $httpProvider.interceptors.push('AttachTokens');
@@ -75,7 +78,7 @@ angular.module('lancealot', [
     // if it's not valid, we then redirect back to signin/signup
     $rootScope.$on('$routeChangeStart', function (evt, next, current) {
       if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-        $location.path('/login');
+        $location.path('/splash');
       }
     });
   });

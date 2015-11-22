@@ -8,7 +8,7 @@ Navbar
   font-size: 20px;
   font-family: 'Quicksand', sans-serif;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
   border: none;
   clear: both;
 }
@@ -46,7 +46,7 @@ Navbar
 General page layout
 */
 
-h1 {
+#lanceTitle {
   font-family: 'Pacifico', cursive;
   font-size: 40px;
   padding-left: 20px;
