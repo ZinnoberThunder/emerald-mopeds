@@ -28,6 +28,10 @@ Navbar
   color: white;
 }
 
+.form-group {
+  text-align: center;
+}
+
 .tagline {
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
@@ -97,7 +101,7 @@ table, form {
 }
 
 form {
-  padding: 50px;
+  padding: 30px;
   margin: auto 200px;
   text-align: left;
 }
