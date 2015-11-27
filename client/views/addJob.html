@@ -13,16 +13,12 @@
     <select ng-model="job.client" class="form-control" id="client">
         <option ng-repeat="client in clients">{{client.name}}</option>
     </select>
-    <a href="/#/clients" id="no_client">Don't see your client? Create a new client here.</a>
+    <a href="/#/addclient" id="no_client">Don't see your client? Create a new client here.</a>
     <br/>
     <br/>
     <label>Description:</label>
       <input ng-model="job.description" class="form-control" id="description" type="text"/><br/>
     <label>Rate: $</label>
       <input ng-model="job.rate" class="form-control" id="rate" type="text"/><br/>
-    <label>Start:</label>
-      <input ng-model="job.start" class="form-control" id="start" type="date"/><br/>
-    <label>End:</label>
-      <input ng-model="job.end" class="form-control" id="end" type="date"/><br/>
     <button class="submit btn btn-default">Add Job</button>
 </form>
