@@ -22,11 +22,15 @@
     <th>Name</th>
     <th>Start</th>
     <th>End</th>
+    <th>Total</th>
+    <th>* Rate ({{tasks[0].job.rate}})</th>
   </thead>
   <tr ng-repeat="task in tasks">
     <td>{{task.name}}</td>
-    <td>{{task.start}}</td>
-    <td ng-show="task.end">{{task.end}}</td>
+    <td>{{task.pStart}}</td>
+    <td ng-show="task.end">{{task.pEnd}}</td>
+    <td ng-show="task.end">{{task.totalTime}}</td>
+    <td ng-show="task.end">{{task.totalTime * task.job.rate}}</td>
     <td ng-hide="task.end"><button ng-click="endTask(task)">Stop</button></td>
 
   </tr>

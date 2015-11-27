@@ -1,6 +1,6 @@
 angular.module('lancealot.tasks', [])
 
-  .controller('TasksController', function ($scope, $routeParams, Tasks) {
+  .controller('TasksController', function ($scope, $routeParams, Tasks, Clients) {
     $scope.tasks = [];
 
     $scope.openTask = false;
@@ -8,7 +8,11 @@ angular.module('lancealot.tasks', [])
     $scope.startTime;
 
     $scope.endTask = function(task) {
-      Tasks.endTask(task).then($scope.fetchTasks);
+      Tasks.endTask(task)
+        .then(function () {
+          console.log(task);
+        })
+        .then($scope.fetchTasks);
       $scope.openTask = false;
       // $scope.currentTime = "00:00";
       // clearInterval($scope.timer);
@@ -19,11 +23,20 @@ angular.module('lancealot.tasks', [])
         .then(function (tasks) {
           $scope.tasks = [];
           for (var i=0; i<tasks.length; i++) {
-            tasks[i].start = $scope.convertTime(tasks[i].start);
-            tasks[i].end = $scope.convertTime(tasks[i].end);
+            tasks[i].pStart = $scope.convertTime(tasks[i].start);
+            tasks[i].pEnd = $scope.convertTime(tasks[i].end);
+            tasks[i].totalTime = $scope.totalTime(tasks[i]);
+            tasks[i].rate = tasks[i].job.rate;
             $scope.tasks.unshift(tasks[i]);
           }
         });
+    };
+
+    $scope.totalTime = function (task) {
+      var start = new Date(task.start);
+      var end = new Date(task.end);
+      var totalTime = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+      return Math.round(totalTime * 100) / 100;
     };
 
     $scope.convertTime = function(time) {
@@ -58,6 +71,7 @@ angular.module('lancealot.tasks', [])
     };
     $scope.fetchTasks();
     // $scope.timer;
+
   })
 
 

@@ -20,10 +20,10 @@
       <input ng-model="job.description" class="form-control" id="description" type="text"/><br/>
     <label>Rate: $</label>
       <input ng-model="job.rate" class="form-control" id="rate" type="text"/><br/>
-    <label>Start:</label>
+<!--     <label>Start:</label>
       <input ng-model="job.start" class="form-control" id="start" type="date"/><br/>
     <label>End:</label>
-      <input ng-model="job.end" class="form-control" id="end" type="date"/><br/>
+      <input ng-model="job.end" class="form-control" id="end" type="date"/><br/> -->
     <button class="submit btn btn-default">Add Job</button>
 </form>
 
@@ -33,19 +33,19 @@
       <th>Client</th>
       <th>Description</th>
       <th>Rate</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Status</th>
-      <th>Id</th>
+<!--       <th>Start</th>
+      <th>End</th> 
+      <th>Status</th> -->
+      <th>Tasks</th>
     </thead>
     <tr ng-repeat="job in jobs">
       <td>{{job.client.name}}</td>
       <td>{{job.description}}</td>
       <td>${{job.rate}}</td>
-      <td>{{job.formattedStart}}</td>
+<!--       <td>{{job.formattedStart}}</td>
       <td>{{job.formattedEnd}}</td>
-      <td><input type="checkbox" {{checked}}></td>
-      <td class='clickableJob'><a href='/#/jobs/{{job._id}}'>{{job._id}}</a></td>
+      <td><input type="checkbox" {{checked}}></td> -->
+      <td class='clickableJob'><a href='/#/jobs/{{job._id}}'>Tasks</a></td>
     </tr>
 
 </table>
