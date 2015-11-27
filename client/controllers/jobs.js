@@ -1,25 +1,16 @@
 angular.module('lancealot.jobs', [])
 
-  .controller('JobsController', function ($scope, Jobs, Clients) {
-    $scope.jobs = [{
-      client: {
-        name: 'fb'
-      },
-      description: 'dev',
-      rate: 50,
-      formattedStart: 1,
-      formattedEnd: 2,
-      _id: 0
-    }, {
-      client: {
-        name: 'google'
-      },
-      description: 'dev',
-      rate: 60,
-      formattedStart: 3,
-      formattedEnd: 4,
-      _id: 1
-    }];
+  .controller('JobsController', function ($scope, Jobs) {
+    $scope.jobs = [];
+
+    Jobs.fetchJobs()
+      .then(function (jobs) {
+        $scope.jobs = jobs;
+      });
+  })
+
+  .controller('AddJobsController', function ($scope, $location, Jobs, Clients) {
+    $scope.jobs = [];
 
     $scope.addJob = function (job) {
       Jobs.addJob(job)
@@ -27,6 +18,7 @@ angular.module('lancealot.jobs', [])
           Jobs.fetchJobs()
             .then(function (jobs) {
               $scope.jobs = jobs;
+              $location.path('/');
             });
         });
 
@@ -37,11 +29,6 @@ angular.module('lancealot.jobs', [])
     Clients.fetchClients() 
       .then(function (clients) {
         $scope.clients = clients;
-      });
-
-    Jobs.fetchJobs()
-      .then(function (jobs) {
-        $scope.jobs = jobs;
       });
   })
 

@@ -16,9 +16,19 @@ angular.module('lancealot', [
         controller: 'JobsController',
         authenticate: true
       })
+      .when('/addjob', {
+        templateUrl: './views/addJob.html',
+        controller: 'AddJobsController',
+        authenticate: true
+      })
       .when('/clients', {
         templateUrl: './views/clients.html',
         controller: 'ClientsController',
+        authenticate: true
+      })
+      .when('/addclient', {
+        templateUrl: './views/addClient.html',
+        controller: 'AddClientsController',
         authenticate: true
       })
       .when('/jobs/:jobId', {
