@@ -1,29 +1,26 @@
 angular.module('lancealot.clients', [])
 
   .controller('ClientsController', function ($scope, Clients) {
-    $scope.clients = [{
-      name: 'fb',
-      address: 'somewhere',
-      phone: 1
-    }, {
-      name: 'google',
-      address: 'somewhere else',
-      phone: 2
-    }];
-
-    $scope.addClient = function (client) {
-      Clients.addClient(client)
-        .then(function (client) {
-          $scope.clients.push(client);
-        });
-      $scope.client = {};
-    };
+    $scope.clients = [];
 
     Clients.fetchClients()
       .then(function (clients) {
         $scope.clients = clients;
       });
 
+  })
+
+  .controller('AddClientsController', function ($scope, $location, Clients) {
+    $scope.clients = [];
+
+    $scope.addClient = function (client) {
+      Clients.addClient(client)
+        .then(function (client) {
+          $scope.clients.push(client);
+          $location.path('/clients');
+        });
+      $scope.client = {};
+    };
   })
 
   .factory('Clients', function ($http) {

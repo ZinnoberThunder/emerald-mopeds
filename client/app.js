@@ -26,6 +26,11 @@ angular.module('lancealot', [
         controller: 'ClientsController',
         authenticate: true
       })
+      .when('/addclient', {
+        templateUrl: './views/addClient.html',
+        controller: 'AddClientsController',
+        authenticate: true
+      })
       .when('/jobs/:jobId', {
         templateUrl: './views/tasks.html',
         controller: 'TasksController',
