@@ -18,19 +18,16 @@
       <th>Client</th>
       <th>Description</th>
       <th>Rate</th>
-      <th>Start</th>
-      <th>End</th>
       <th>Status</th>
-      <th>Id</th>
+      <th> </th>
     </thead>
     <tr ng-repeat="job in jobs">
       <td>{{job.client.name}}</td>
       <td>{{job.description}}</td>
       <td>${{job.rate}}</td>
-      <td>{{job.formattedStart}}</td>
-      <td>{{job.formattedEnd}}</td>
+
       <td><input type="checkbox" {{checked}}></td>
-      <td class='clickableJob'><a href='/#/jobs/{{job._id}}'>{{job._id}}</a></td>
+      <td class='clickableJob'><a href='/#/jobs/{{job._id}}'>more info</a></td>
     </tr>
 
 </table>
