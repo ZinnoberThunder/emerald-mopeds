@@ -16,6 +16,8 @@
 
 <h2 ng-hide="tasks[0].end">{{currentTime}}</h2>
 
+<h2>Client: {{tasks[0].job.client}}<h2>
+
 <table class="table table-striped">
 
   <thead>
@@ -24,15 +26,16 @@
     <th>End</th>
     <th>Total</th>
     <th>* Rate ({{tasks[0].job.rate}})</th>
+    <th>Paid</th>
   </thead>
   <tr ng-repeat="task in tasks">
     <td>{{task.name}}</td>
     <td>{{task.pStart}}</td>
     <td ng-show="task.end">{{task.pEnd}}</td>
     <td ng-show="task.end">{{task.totalTime}}</td>
-    <td ng-show="task.end">{{task.totalTime * task.job.rate}}</td>
+    <td ng-show="task.end">{{(task.totalTime * task.job.rate).toFixed(2)}}</td>
     <td ng-hide="task.end"><button ng-click="endTask(task)">Stop</button></td>
-
+    <td><input type="checkbox" name="paidBox" value="completed"><br></td>
   </tr>
 
 </table>
