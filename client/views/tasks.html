@@ -1,0 +1,60 @@
+<div class='navigation' ng-controller="NavController">
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a href='/#/' class='index'>Jobs</a></li>
+      <li><a href='/#/clients' class='clients'>Clients</a></li>
+      <li><a ng-click="logoutUser()" href='/#/login' class='add'>Logout</a></li>
+    </ul>
+  </nav>
+</div>
+
+<form ng-show="!tasks[0] || tasks[0].end" ng-submit="addTask(task)" class="form-group" id="addJob">
+    <label>Task description:</label>
+      <input ng-model="task.name" lass="form-control" id="name" type="text"/>
+    <button class="submit btn btn-default">Start</button>
+</form>
+
+<h2 ng-hide="tasks[0].end">{{currentTime}}</h2>
+
+<h2>Client: {{client.name}}</h2>
+
+<table class="table table-striped">
+
+  <thead>
+    <th>Name</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>Hours Worked</th>
+    <th>* Rate (${{tasks[0].job.rate}})</th>
+    <th></th>
+  </thead>
+  <tr ng-repeat="task in tasks">
+    <td>{{task.name}}</td>
+    <td>{{task.pStart}}</td>
+    <td ng-show="task.end">{{task.pEnd}}</td>
+    <td ng-show="task.end">{{task.totalTime}}</td>
+    <td ng-show="task.end">${{(task.totalTime * task.job.rate).toFixed(2)}}</td>
+    <td ng-show="task.end"><a ng-click="editTask(task)">edit</a></td>
+    <td ng-hide="task.end"><button ng-click="endTask(task)">Stop</button></td>
+    <td ng-hide="task.end"></td>
+    <td ng-hide="task.end"></td>
+    <td ng-hide="task.end"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>
+      <button ng-click="createPDF()">Create PDF</button> 
+    </td>
+    <td>
+      <b>
+        Amount Due:
+      </b>
+    </td>
+    <td>
+      ${{totalBillable.toFixed(2)}}
+    </td>
+    <td></td>
+  </tr>
+
+</table>

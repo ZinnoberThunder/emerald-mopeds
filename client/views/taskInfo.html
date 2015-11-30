@@ -1,0 +1,22 @@
+<div class='navigation' ng-controller="NavController">
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a href='/#/' class='index'>Jobs</a></li>
+      <li><a href='/#/clients' class='clients'>Clients</a></li>
+      <li><a ng-click="logoutUser()" href='/#/login' class='add'>Logout</a></li>
+    </ul>
+  </nav>
+</div>
+
+<form ng-show="editingTask" ng-submit="updateTask(editingTask)" class="form-group" id="editTask">
+  <h4>{{editingTask.name}}</h4><br/>
+  <label>edit start date</label>
+    <input ng-model="editingTask.start" class="form-control" id="startDate" type="date" value="{{getDate('start')}}"/><br/>
+  <label>edit start time</label>
+    <input ng-model="editingTask.startTime" class="form-control" id="startTime" type="time"/><br/>
+  <label>edit end date</label>
+    <input ng-model="editingTask.end" class="form-control" id="endDate" type="date" value="{{getDate('end')}}"/><br/>
+  <label>edit end time</label>
+    <input ng-model="editingTask.endTime" class="form-control" id="endTime" type="time"/><br/>
+  <button class="submit btn btn-default">Update Task</button>
+</form>

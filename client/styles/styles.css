@@ -10,6 +10,7 @@ Navbar
   text-align: center;
   margin-top: 20px;
   border: none;
+  clear: both;
 }
 
 .navbar .navbar-nav {
@@ -26,6 +27,10 @@ Navbar
 .navbar-default .navbar-nav li a {
   text-decoration: none;
   color: white;
+}
+
+.form-group {
+  text-align: center;
 }
 
 .tagline {
@@ -86,6 +91,10 @@ Forms, inputs, and tables
   color: #30312e;
 }
 
+.table>tbody>tr>td {
+  vertical-align: middle;
+}
+
 td {
   color: #57616f;
 }
@@ -97,7 +106,7 @@ table, form {
 }
 
 form {
-  padding: 50px;
+  padding: 30px;
   margin: auto 200px;
   text-align: left;
 }

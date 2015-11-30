@@ -1,0 +1,37 @@
+<div class='navigation' ng-controller="NavController">
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a href='/#/' class='index'>Jobs</a></li>
+      <li><a href='/#/clients' class='clients'>Clients</a></li>
+      <li><a ng-click="logoutUser()" href='/#/login' class='add'>Logout</a></li>
+    </ul>
+  </nav>
+</div>
+
+<a href="/#/addjob">
+  <button class="submit btn btn-default">add new job</button>
+</a>
+
+<table class="table table-striped">
+
+  <thead>
+      <th>Client</th>
+      <th>Description</th>
+      <th>Rate</th>
+<!--       <th>Start</th>
+      <th>End</th> 
+      <th>Status</th> -->
+      <th>Tasks</th>
+    </thead>
+    <tr ng-repeat="job in jobs">
+      <td>{{job.client.name}}</td>
+      <td>{{job.description}}</td>
+      <td>${{job.rate}}</td>
+<!--       <td>{{job.formattedStart}}</td>
+      <td>{{job.formattedEnd}}</td>
+      <td><input type="checkbox" {{checked}}></td> -->
+      <td class='clickableJob'><a href='/#/jobs/{{job._id}}'>Show tasks</a></td>
+    </tr>
+
+</table>
+

@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
 var clientSchema = mongoose.Schema({
-  _id: Number, 
+  _id: Number,
+  user: {type: String, ref: 'User'},
   name: String,
   address: String,
   phone: String
