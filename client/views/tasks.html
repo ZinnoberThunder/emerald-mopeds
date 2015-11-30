@@ -8,13 +8,13 @@
   </nav>
 </div>
 
-<form ng-show="!tasks[0] || tasks[0].end" ng-submit="addTask(task)" class="form-group" id="addJob">
+<form ng-show="tasks[0].end" ng-submit="addTask(task)" class="form-group" id="addJob">
     <label>Task description:</label>
       <input ng-model="task.name" lass="form-control" id="name" type="text"/>
     <button class="submit btn btn-default">Start</button>
 </form>
 
-<h2 ng-hide="tasks[0].end">{{currentTime}}</h2>
+<div ng-hide="!tasks[0] || tasks[0].end"><h2>Current Task:</h2> <h2>{{currentTime}}</h2></div>
 
 <h2>Client: {{client.name}}</h2>
 

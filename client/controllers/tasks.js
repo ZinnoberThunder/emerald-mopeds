@@ -7,7 +7,7 @@ angular.module('lancealot.tasks', [])
 
     $scope.totalBillable = 0;
 
-    $scope.startTime;
+    // $scope.currentTime = "00:00";
 
     $scope.endTask = function(task) {
       Tasks.endTask(task)
@@ -79,18 +79,56 @@ angular.module('lancealot.tasks', [])
     //     $scope.$apply();
     //   },10000);
 
+    $scope.timer = function() {
+      if (!$scope.startTime) {
+        $scope.startTime = +new Date($scope.tasks[0].start);
+      }
+      var minutes = Math.floor((Date.now() - $scope.startTime) / 1000 / 60);
+      var hours = 0;
+      console.log(minutes);
+      if (minutes > 59) {
+        var hours = Math.floor(minutes / 60);
+        var minutes = Math.floor(minutes % 60);
+      } else {
+        var hours = 0;
+      }
+      $scope.currentTime = $scope.timeFormat(hours, minutes);
+      console.log($scope.currentTime);
+    };
+
+
+    $scope.timeFormat = function(hours, minutes) {
+      if (hours < 10) {
+        hours = "0" + hours;
+      }
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return hours + ":" + minutes;
+    };
+
+    angular.element(document).ready(setTimeout(function(){
+        $scope.$apply($scope.timer)
+      }, 100));
+
+    angular.element(document).ready(setInterval(function(){
+        $scope.$apply($scope.timer);
+      }, 1000));
+
     $scope.addTask = function (task) {
       Tasks.addTask(task, $routeParams.jobId)
         .then(function () {
           $scope.startTime = Date.now()
           $scope.fetchTasks();
           $scope.openTask = true;
+          $scope.timer();
+          setInterval(function(){
+            $scope.$apply($scope.timer)
+          }, 1000);
         });
       $scope.task = {};
     };
     $scope.fetchTasks();
-    // $scope.timer;
-
   })
 
 
