@@ -7,8 +7,6 @@ angular.module('lancealot.tasks', [])
 
     $scope.totalBillable = 0;
 
-    // $scope.currentTime = "00:00";
-
     $scope.endTask = function(task) {
       Tasks.endTask(task)
         .then(function () {
@@ -16,8 +14,6 @@ angular.module('lancealot.tasks', [])
         })
         .then($scope.fetchTasks);
       $scope.openTask = false;
-      // $scope.currentTime = "00:00";
-      // clearInterval($scope.timer);
     };
 
     $scope.setClient = function (id) {
@@ -63,29 +59,12 @@ angular.module('lancealot.tasks', [])
       return time.toString().slice(4).slice(0,-18);
     };
 
-    // $scope.timer = setInterval(
-    //   function(){
-    //     console.log("running");
-    //     var time = (-($scope.startTime - Date.now()) / 1000);
-    //     var hours = Math.floor(time / 60 / 60);
-    //     var minutes = Math.floor(time / 60);
-    //     if (hours < 10) {
-    //       hours = "0" + hours
-    //     }
-    //     if (minutes < 10) {
-    //       minutes = "0" + minutes
-    //     }
-    //     $scope.currentTime = hours + ":" + minutes;
-    //     $scope.$apply();
-    //   },10000);
-
     $scope.timer = function() {
       if (!$scope.startTime) {
         $scope.startTime = +new Date($scope.tasks[0].start);
       }
       var minutes = Math.floor((Date.now() - $scope.startTime) / 1000 / 60);
       var hours = 0;
-      console.log(minutes);
       if (minutes > 59) {
         var hours = Math.floor(minutes / 60);
         var minutes = Math.floor(minutes % 60);
@@ -93,7 +72,6 @@ angular.module('lancealot.tasks', [])
         var hours = 0;
       }
       $scope.currentTime = $scope.timeFormat(hours, minutes);
-      console.log($scope.currentTime);
     };
 
 
@@ -108,7 +86,7 @@ angular.module('lancealot.tasks', [])
     };
 
     angular.element(document).ready(setTimeout(function(){
-        $scope.$apply($scope.timer)
+        $scope.$apply($scope.timer);
       }, 100));
 
     angular.element(document).ready(setInterval(function(){
