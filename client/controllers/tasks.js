@@ -94,46 +94,50 @@ angular.module('lancealot.tasks', [])
     $scope.createPDF = function () {
       var doc = new PDFDocument();
       var stream = doc.pipe(blobStream());
+      Tasks.getLogo('ubuntu-logo32.png')
+        .then(function (data) {
+          doc.image(data);
+          doc.text('Name: ' + $scope.client.name);
+          doc.text('Address: ' + $scope.client.address);
+          doc.text('Phone: ' + $scope.client.phone);
 
-      doc.text('Name: ' + $scope.client.name);
-      doc.text('Address: ' + $scope.client.address);
-      doc.text('Phone: ' + $scope.client.phone);
+          /*
+          doc.image('../styles/Lancer_icon.png', 320, 15, {fit: [100, 100]})
+           .rect(320, 15, 100, 100)
+           .stroke()
+           .text('Fit', 320, 0);
+          */
+          
+          doc
+            .moveTo(100, 120)
+            .lineTo(500, 120)
+            .fill("#0059b3")
+            .stroke();
 
-      /*
-      doc.image('../styles/Lancer_icon.png', 320, 15, {fit: [100, 100]})
-       .rect(320, 15, 100, 100)
-       .stroke()
-       .text('Fit', 320, 0);
-      */
-      
-      doc
-        .moveTo(100, 120)
-        .lineTo(500, 120)
-        .fill("#0059b3")
-        .stroke();
+          doc
+            .moveDown()
+            .fill("black")
+            .text('Job: ' + $scope.tasks[0].job.description, {align: 'center'});
+          doc.text('Rate: $' + $scope.tasks[0].rate + '/hr', {align: 'center'});
 
-      doc
-        .moveDown()
-        .fill("black")
-        .text('Job: ' + $scope.tasks[0].job.description, {align: 'center'});
-      doc.text('Rate: $' + $scope.tasks[0].rate + '/hr', {align: 'center'});
+          doc
+            .moveTo(100, 160)
+            .lineTo(500, 160)
+            .fill("#0059b3")
+            .stroke();
 
-      doc
-        .moveTo(100, 160)
-        .lineTo(500, 160)
-        .fill("#0059b3")
-        .stroke();
+          $scope.tasks.forEach(function (task) {
+            doc
+              .moveDown()
+              .fill("black")
+              .text('Task: ' + task.name);
+            doc.text('Hours Worked: ' + task.totalTime);
+            doc.text('Total Cost: $' + (task.totalTime * task.rate).toFixed(2), {align: 'right'});
+          })
 
-      $scope.tasks.forEach(function (task) {
-        doc
-          .moveDown()
-          .fill("black")
-          .text('Task: ' + task.name);
-        doc.text('Hours Worked: ' + task.totalTime);
-        doc.text('Total Cost: $' + (task.totalTime * task.rate).toFixed(2), {align: 'right'});
-      })
+          doc.end();
+        }
 
-      doc.end();
       stream.on('finish', function () {
         var url = stream.toBlobURL('application/pdf');
         window.open(url);
@@ -146,6 +150,15 @@ angular.module('lancealot.tasks', [])
   .factory('Tasks', function ($http) {
 
     var editingTask = undefined;
+
+    var getLogo = function (logo) {
+      return $http.get(logo, {responseType: 'arraybuffer'})
+        .then(function (data) { 
+          console.log(data.data.byteLength + " bytes in a variable of type '" + typeof(data.data) + "'");
+          console.log(data.data instanceof ArrayBuffer);
+          return data.data;
+        });
+    };
 
     var fetchTasks = function (id) {
       return $http({
@@ -205,6 +218,7 @@ angular.module('lancealot.tasks', [])
       endTask: endTask,
       updateTask: updateTask,
       getEditingTask: getEditingTask,
-      setEditingTask: setEditingTask
+      setEditingTask: setEditingTask,
+      getLogo: getLogo
     };
   })

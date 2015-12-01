@@ -2887,7 +2887,9 @@ PDFImage = (function() {
 
   PDFImage.open = function(src, label) {
     var data, match;
-    if (Buffer.isBuffer(src)) {
+    if (src instanceof ArrayBuffer) {
+      data = new Buffer(new Uint8Array(src), 'object');
+    } else if (Buffer.isBuffer(src)) {
       data = src;
     } else {
       if (match = /^data:.+;base64,(.*)$/.exec(src)) {
