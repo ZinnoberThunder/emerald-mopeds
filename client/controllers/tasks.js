@@ -102,21 +102,6 @@ angular.module('lancealot.tasks', [])
         $scope.$apply($scope.timer);
       }, 1000));
 
-    // $scope.timer = setInterval(
-    //   function(){
-    //     console.log("running");
-    //     var time = (-($scope.startTime - Date.now()) / 1000);
-    //     var hours = Math.floor(time / 60 / 60);
-    //     var minutes = Math.floor(time / 60);
-    //     if (hours < 10) {
-    //       hours = "0" + hours
-    //     }
-    //     if (minutes < 10) {
-    //       minutes = "0" + minutes
-    //     }
-    //     $scope.currentTime = hours + ":" + minutes;
-    //     $scope.$apply();
-    //   },10000);
 
     $scope.addTask = function (task) {
       Tasks.addTask(task, $routeParams.jobId)
