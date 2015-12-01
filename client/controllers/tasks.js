@@ -94,49 +94,44 @@ angular.module('lancealot.tasks', [])
     $scope.createPDF = function () {
       var doc = new PDFDocument();
       var stream = doc.pipe(blobStream());
-      Tasks.getLogo('ubuntu-logo32.png')
+      Tasks.getLogo('../styles/Lancer_icon.png')
         .then(function (data) {
-          doc.image(data);
-          doc.text('Name: ' + $scope.client.name);
-          doc.text('Address: ' + $scope.client.address);
+          doc.image(data, 440, 40, {fit: [80,80]});
+          doc.font('Helvetica').text($scope.client.name);
+          doc.text($scope.client.address);
           doc.text('Phone: ' + $scope.client.phone);
-
-          /*
-          doc.image('../styles/Lancer_icon.png', 320, 15, {fit: [100, 100]})
-           .rect(320, 15, 100, 100)
-           .stroke()
-           .text('Fit', 320, 0);
-          */
-          
-          doc
-            .moveTo(100, 120)
-            .lineTo(500, 120)
-            .fill("#0059b3")
-            .stroke();
 
           doc
             .moveDown()
             .fill("black")
+            .fontSize(18)
             .text('Job: ' + $scope.tasks[0].job.description, {align: 'center'});
           doc.text('Rate: $' + $scope.tasks[0].rate + '/hr', {align: 'center'});
 
           doc
-            .moveTo(100, 160)
-            .lineTo(500, 160)
-            .fill("#0059b3")
+            .moveTo(100, 170)
+            .lineTo(500, 170)
+            .fill("black")
+            .fontSize(12)
             .stroke();
 
+          var totalOwed = 0;
           $scope.tasks.forEach(function (task) {
             doc
               .moveDown()
               .fill("black")
               .text('Task: ' + task.name);
             doc.text('Hours Worked: ' + task.totalTime);
-            doc.text('Total Cost: $' + (task.totalTime * task.rate).toFixed(2), {align: 'right'});
+            totalOwed += (task.totalTime * task.rate);
+            doc.text('$' + (task.totalTime * task.rate).toFixed(2), {align: 'right'});
           })
+          
+          doc
+            .moveDown().moveDown().moveDown()
+            .text("Total Owed: $" + totalOwed.toFixed(2), {align:'right'});
 
           doc.end();
-        }
+        });
 
       stream.on('finish', function () {
         var url = stream.toBlobURL('application/pdf');
