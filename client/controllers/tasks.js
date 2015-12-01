@@ -63,21 +63,45 @@ angular.module('lancealot.tasks', [])
       return time.toString().slice(4).slice(0,-18);
     };
 
-    // $scope.timer = setInterval(
-    //   function(){
-    //     console.log("running");
-    //     var time = (-($scope.startTime - Date.now()) / 1000);
-    //     var hours = Math.floor(time / 60 / 60);
-    //     var minutes = Math.floor(time / 60);
-    //     if (hours < 10) {
-    //       hours = "0" + hours
-    //     }
-    //     if (minutes < 10) {
-    //       minutes = "0" + minutes
-    //     }
-    //     $scope.currentTime = hours + ":" + minutes;
-    //     $scope.$apply();
-    //   },10000);
+
+    $scope.timer = function() {
+      if (!$scope.startTime) {
+        if ($scope.tasks.length < 1) {
+          $scope.startTime = Date.now();
+        } else {
+          $scope.startTime = +new Date($scope.tasks[0].start); 
+        }
+      }
+      var minutes = Math.floor((Date.now() - $scope.startTime) / 1000 / 60);
+      var hours = 0;
+      if (minutes > 59) {
+        var hours = Math.floor(minutes / 60);
+        var minutes = Math.floor(minutes % 60);
+      } else {
+        var hours = 0;
+      }
+      $scope.currentTime = $scope.timeFormat(hours, minutes);
+    };
+
+
+    $scope.timeFormat = function(hours, minutes) {
+      if (hours < 10) {
+        hours = "0" + hours;
+      }
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return hours + ":" + minutes;
+    };
+
+    angular.element(document).ready(setTimeout(function(){
+        $scope.$apply($scope.timer);
+      }, 100));
+
+    angular.element(document).ready(setInterval(function(){
+        $scope.$apply($scope.timer);
+      }, 1000));
+
 
     $scope.addTask = function (task) {
       Tasks.addTask(task, $routeParams.jobId)
@@ -85,6 +109,10 @@ angular.module('lancealot.tasks', [])
           $scope.startTime = Date.now()
           $scope.fetchTasks();
           $scope.openTask = true;
+          $scope.timer();
+          setInterval(function(){
+            $scope.$apply($scope.timer)
+          }, 1000);
         });
       $scope.task = {};
     };
