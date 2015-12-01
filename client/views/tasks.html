@@ -14,7 +14,7 @@
     <button class="submit btn btn-default">Start</button>
 </form>
 
-<h2 ng-hide="tasks[0].end">{{currentTime}}</h2>
+<h2 ng-hide="!tasks[0] || tasks[0].end">Current Task: {{currentTime}}</h2>
 
 <h2>Client: {{client.name}}</h2>
 
